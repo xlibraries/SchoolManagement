@@ -53,6 +53,9 @@
             <th>
                 Credits
             </th>
+            <th>
+                Grade
+            </th>
         </tr>
 
         @foreach(var enrollment in Model.Enrollements)
@@ -65,6 +68,9 @@
                 </td>
                 <td>
                     @enrollment.Course.Credits
+                </td>
+                <td>
+                    @enrollment.Grade
                 </td>
             </tr>
         }
