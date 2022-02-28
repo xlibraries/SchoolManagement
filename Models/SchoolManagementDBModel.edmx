@@ -10,8 +10,8 @@
             <PropertyRef Name="CourseID" />
           </Key>
           <Property Name="CourseID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Title" Type="nvarchar" MaxLength="50" />
-          <Property Name="Credits" Type="int" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Credits" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Enrollement">
           <Key>
@@ -82,8 +82,8 @@
             <PropertyRef Name="CourseID" />
           </Key>
           <Property Name="CourseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Credits" Type="Int32" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Credits" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Enrollements" Relationship="Self.FK_dbo_Enrollement_dbo_Course_CourseID" FromRole="Course" ToRole="Enrollement" />
         </EntityType>
         <EntityType Name="Enrollement">
