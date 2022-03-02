@@ -7,8 +7,8 @@ namespace SchoolManagement.Models
     public class ExternalLoginConfirmationViewModel
     {
         [Required]
-        [Display(Name = "Email")]
-        public string Email { get; set; }
+        [Display(Name = "User Name")]
+        public string UserName { get; set; }
     }
 
     public class ExternalLoginListViewModel
@@ -50,9 +50,8 @@ namespace SchoolManagement.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Email")]
-        [EmailAddress]
-        public string Email { get; set; }
+        [Display(Name = "User Name")]
+        public string UserName { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
@@ -65,15 +64,24 @@ namespace SchoolManagement.Models
 
     public class RegisterViewModel
     {
+
         [Required]
-        [EmailAddress]
-        [Display(Name = "Email / Username")]
-        public string Email { get; set; }
+        [Display(Name = "User Name")]
+        public string UserName { get; set; }
+
+        [Required]
+        [Display(Name = "User Role")]
+        public string UserRole { get; set; }
 
         [Required]
         [DataType(DataType.DateTime)]
         [Display(Name = "Date of Birth")]
         public DateTime BirthDate { get; set; }
+
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Email / Username")]
+        public string Email { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
