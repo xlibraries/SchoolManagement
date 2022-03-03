@@ -21,6 +21,7 @@
           <Property Name="Grade" Type="decimal" Precision="3" Scale="2" />
           <Property Name="CourseID" Type="int" Nullable="false" />
           <Property Name="StudentID" Type="int" Nullable="false" />
+          <Property Name="LecturerID" Type="int" />
         </EntityType>
         <EntityType Name="Student">
           <Key>
@@ -97,6 +98,7 @@
           <Property Name="StudentID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Course" Relationship="Self.FK_dbo_Enrollement_dbo_Course_CourseID" FromRole="Enrollement" ToRole="Course" />
           <NavigationProperty Name="Student" Relationship="Self.FK_dbo_Enrollement_dbo_Student_StudentID" FromRole="Enrollement" ToRole="Student" />
+          <Property Name="LecturerID" Type="Int32" />
         </EntityType>
         <EntityType Name="Student">
           <Key>
@@ -169,6 +171,7 @@
           <EntitySetMapping Name="Enrollements">
             <EntityTypeMapping TypeName="SchoolManagement_DBModel.Enrollement">
               <MappingFragment StoreEntitySet="Enrollement">
+                <ScalarProperty Name="LecturerID" ColumnName="LecturerID" />
                 <ScalarProperty Name="EnrollementID" ColumnName="EnrollementID" />
                 <ScalarProperty Name="Grade" ColumnName="Grade" />
                 <ScalarProperty Name="CourseID" ColumnName="CourseID" />
