@@ -93,7 +93,7 @@ namespace SchoolManagement.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(enrollement).State = EntityState.Modified;
+                db.Enrollements.Add(enrollement);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
@@ -101,6 +101,27 @@ namespace SchoolManagement.Controllers
             ViewBag.StudentID = new SelectList(db.Students, "StudentID", "LastName", enrollement.StudentID);
             ViewBag.LecturerID = new SelectList(db.Lecturers, "LecturerID", "FirstName", enrollement.LecturerID);
             return View(enrollement);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> AddStudent([Bind(Include = "CourseID,StudentID")] Enrollement enrollement)
+        {
+            try
+            {
+                var isEnrolled = db.Enrollements.Any(q => q.CourseID == enrollement.CourseID && q.StudentID == enrollement.StudentID);
+
+                if (ModelState.IsValid && !isEnrolled)
+                {
+                    db.Enrollements.Add(enrollement);
+                    await db.SaveChangesAsync();
+                    return Json(new { ISSuccess = true, Message = "Student addeed successfully"}, JsonRequestBehavior.AllowGet);
+                }
+                return Json(new { ISSuccess = false, Message = "Student is already enrolled" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return Json(new { ISSuccess = false, Message = "Please contact your adminstrator" }, JsonRequestBehavior.AllowGet);
+            }
         }
 
         // GET: Enrollements/Delete/5
@@ -127,6 +148,17 @@ namespace SchoolManagement.Controllers
             db.Enrollements.Remove(enrollement);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public JsonResult GetStudents(string term)
+        {
+            var students = db.Students.Select(q => new
+            {
+                Name = q.FirstName + " " + q.LastName,
+                ID = q.StudentID
+            }).Where(q => q.Name.Contains(term));
+            return Json(students, JsonRequestBehavior.AllowGet);
         }
 
         protected override void Dispose(bool disposing)

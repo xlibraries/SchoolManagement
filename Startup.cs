@@ -21,21 +21,23 @@ namespace SchoolManagement
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
 
-            if(!roleManager.RoleExists("Admin"))
+            if (!roleManager.RoleExists("Admin"))
             {
-                var role = new IdentityRole();
-                role.Name = "Admin";
+                var role = new IdentityRole
+                {
+                    Name = "Admin"
+                };
                 roleManager.Create(role);
             }
 
-            if(!roleManager.RoleExists("Teacher"))
+            if (!roleManager.RoleExists("Teacher"))
             {
                 var role = new IdentityRole();
                 role.Name = "Teacher";
                 roleManager.Create(role);
             }
             
-            if(!roleManager.RoleExists("Supervisor"))
+            if (!roleManager.RoleExists("Supervisor"))
             {
                 var role = new IdentityRole();
                 role.Name = "Supervisor";

@@ -22,7 +22,7 @@
             @Html.DisplayNameFor(model => model.Student.LastName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Lecturer.FirstName)
+            @Html.DisplayNameFor(model => model.Student.FirstName)
         </th>
         <th></th>
     </tr>
@@ -39,7 +39,7 @@
             @Html.DisplayFor(modelItem => item.Student.LastName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Lecturer.FirstName)
+            @Html.DisplayFor(modelItem => item.Student.FirstName)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.EnrollementID }) |
