@@ -22,5 +22,6 @@ namespace SchoolManagement.Models
     
         public virtual Course Course { get; set; }
         public virtual Student Student { get; set; }
+        public virtual Lecturer Lecturer { get; set; }
     }
 }

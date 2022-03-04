@@ -23,6 +23,14 @@
           <Property Name="StudentID" Type="int" Nullable="false" />
           <Property Name="LecturerID" Type="int" />
         </EntityType>
+        <EntityType Name="Lecturer">
+          <Key>
+            <PropertyRef Name="LecturerID" />
+          </Key>
+          <Property Name="LecturerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="Student">
           <Key>
             <PropertyRef Name="StudentID" />
@@ -48,6 +56,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_dbo_Enrollement_dbo_Lecturer_LecturerID">
+          <End Role="Lecturer" Type="Self.Lecturer" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Enrollement" Type="Self.Enrollement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lecturer">
+              <PropertyRef Name="LecturerID" />
+            </Principal>
+            <Dependent Role="Enrollement">
+              <PropertyRef Name="LecturerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dbo_Enrollement_dbo_Student_StudentID">
           <End Role="Student" Type="Self.Student" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -65,9 +87,14 @@
         <EntityContainer Name="SchoolManagement_DBModelStoreContainer">
           <EntitySet Name="Course" EntityType="Self.Course" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Enrollement" EntityType="Self.Enrollement" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Lecturer" EntityType="Self.Lecturer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_dbo_Enrollement_dbo_Course_CourseID" Association="Self.FK_dbo_Enrollement_dbo_Course_CourseID">
             <End Role="Course" EntitySet="Course" />
+            <End Role="Enrollement" EntitySet="Enrollement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Enrollement_dbo_Lecturer_LecturerID" Association="Self.FK_dbo_Enrollement_dbo_Lecturer_LecturerID">
+            <End Role="Lecturer" EntitySet="Lecturer" />
             <End Role="Enrollement" EntitySet="Enrollement" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_Enrollement_dbo_Student_StudentID" Association="Self.FK_dbo_Enrollement_dbo_Student_StudentID">
@@ -99,6 +126,7 @@
           <NavigationProperty Name="Course" Relationship="Self.FK_dbo_Enrollement_dbo_Course_CourseID" FromRole="Enrollement" ToRole="Course" />
           <NavigationProperty Name="Student" Relationship="Self.FK_dbo_Enrollement_dbo_Student_StudentID" FromRole="Enrollement" ToRole="Student" />
           <Property Name="LecturerID" Type="Int32" />
+          <NavigationProperty Name="Lecturer" Relationship="SchoolManagement_DBModel.FK_dbo_Enrollement_dbo_Lecturer_LecturerID" FromRole="Enrollement" ToRole="Lecturer" />
         </EntityType>
         <EntityType Name="Student">
           <Key>
@@ -152,7 +180,35 @@
             <End Role="Student" EntitySet="Students" />
             <End Role="Enrollement" EntitySet="Enrollements" />
           </AssociationSet>
+          <EntitySet Name="Lecturers" EntityType="SchoolManagement_DBModel.Lecturer" />
+          <AssociationSet Name="FK_dbo_Enrollement_dbo_Lecturer_LecturerID" Association="SchoolManagement_DBModel.FK_dbo_Enrollement_dbo_Lecturer_LecturerID">
+            <End Role="Lecturer" EntitySet="Lecturers" />
+            <End Role="Enrollement" EntitySet="Enrollements" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Lecturer">
+          <Key>
+            <PropertyRef Name="LecturerID" />
+          </Key>
+          <Property Name="LecturerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Enrollements" Relationship="SchoolManagement_DBModel.FK_dbo_Enrollement_dbo_Lecturer_LecturerID" FromRole="Lecturer" ToRole="Enrollement" />
+        </EntityType>
+        <Association Name="FK_dbo_Enrollement_dbo_Lecturer_LecturerID">
+          <End Type="SchoolManagement_DBModel.Lecturer" Role="Lecturer" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="SchoolManagement_DBModel.Enrollement" Role="Enrollement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lecturer">
+              <PropertyRef Name="LecturerID" />
+            </Principal>
+            <Dependent Role="Enrollement">
+              <PropertyRef Name="LecturerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -188,6 +244,15 @@
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="EnrollmentDate" ColumnName="EnrollmentDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Lecturers">
+            <EntityTypeMapping TypeName="SchoolManagement_DBModel.Lecturer">
+              <MappingFragment StoreEntitySet="Lecturer">
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LecturerID" ColumnName="LecturerID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
